@@ -78,6 +78,9 @@ public class PlayerController : MonoBehaviour
             scene.Questions[0].SetActive(true);
 
         ans = UnityEngine.Random.Range(0, 6);
+
+        //ans = 1;
+
         eye = GameObject.Find("CC_Base_Eye");
         foreach (GameObject it in scene.hints)
             it.SetActive(false);
@@ -100,26 +103,15 @@ public class PlayerController : MonoBehaviour
         if (ansObj.transform.position.x > scene.NPC.transform.position.x)
         {
             scene.arrowL.transform.position = (ansObj.transform.position + eye.transform.position) / 2;
+            print(angle);
             scene.arrowL.transform.rotation = Quaternion.Euler(0f, 0f, 90 - angle);
         }
         else
         {
             scene.arrowR.transform.position = (ansObj.transform.position + eye.transform.position) / 2;
+            print(angle);
             scene.arrowR.transform.rotation = Quaternion.Euler(0f, 0f, 90 - angle);
         }
-
-        if (ans == 5)
-            scene.arrowL.transform.rotation = Quaternion.Euler(0f, 0f, 0 -  scene.arrowL.transform.rotation.z);
-        if (ans == 1)
-            scene.arrowR.transform.rotation = Quaternion.Euler(0f, 0f, 0 - scene.arrowR.transform.rotation.z);
-
-        /*Quaternion quate = Quaternion.identity;
-        quate.eulerAngles = new Vector3(0f, 0f, 15f);
-        arrowR.transform.rotation = quate;
-        arrowR.transform.rotation = Quaternion.Euler(0f, 0f, 15f);*/
-
-        //temp = new Scene(0, fruit);
-        //s.Add(temp);
     }
 
     private void Start()
@@ -155,8 +147,16 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            record.selectObject(scene.items[0], stage, hint);
+            //record.selectObject(scene.items[0], stage, hint);
+            select = UnityEngine.Random.Range(0, 6); ;
+            scene.YesOrNo.transform.position = new Vector3(scene.items[select].transform.position.x, scene.items[select].gameObject.transform.position.y + float.Parse("0.5"), 2);
+            scene.YesOrNo.SetActive(true);
+            foreach (GameObject it in scene.yes_no)
+                it.SetActive(true);
+            scene.yes_no[0].gameObject.transform.position = new Vector3(scene.items[select].gameObject.transform.position.x - float.Parse("0.5"), scene.items[select].gameObject.transform.position.y, scene.items[select].gameObject.transform.position.z);
+            scene.yes_no[1].gameObject.transform.position = new Vector3(scene.items[select].gameObject.transform.position.x + float.Parse("0.5"), scene.items[select].gameObject.transform.position.y, scene.items[select].gameObject.transform.position.z);
         }
+
 
         /*ansObj = scene.items[ans];
 
@@ -189,9 +189,12 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     state = State.SECOND_STATE;
+                    scene.YesOrNo.transform.position = new Vector3(scene.items[select].transform.position.x, scene.items[select].gameObject.transform.position.y + float.Parse("0.5"), 1);
                     scene.YesOrNo.SetActive(true);
                     foreach (GameObject it in scene.yes_no)
                         it.SetActive(true);
+                    scene.yes_no[0].gameObject.transform.position = new Vector3(scene.items[select].gameObject.transform.position.x - float.Parse("0.5"), scene.items[select].gameObject.transform.position.y, scene.items[select].gameObject.transform.position.z);
+                    scene.yes_no[1].gameObject.transform.position = new Vector3(scene.items[select].gameObject.transform.position.x + float.Parse("0.5"), scene.items[select].gameObject.transform.position.y, scene.items[select].gameObject.transform.position.z);
                 }
                 break;
             case State.SECOND_STATE: // Tsai: Use enumeration to define states
@@ -354,5 +357,10 @@ public class PlayerController : MonoBehaviour
                 state = State.THIRDSTATE;
                 break;
         }
+    }
+
+    public void selectObject()
+    {
+        print("Click!");
     }
 }
