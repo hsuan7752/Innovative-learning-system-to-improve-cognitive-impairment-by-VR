@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour
                     scene.YesOrNo.SetActive(false);
                     foreach (GameObject it in scene.yes_no)
                         it.SetActive(false);
-                    record.selectObject(other.gameObject, stage, hint);
+                    //record.selectObject(other.gameObject, stage, hint);
                     if (ans == select)
                     {
                         state = State.THIRDSTATE;
