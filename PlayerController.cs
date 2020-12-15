@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else
                     {
-                        switch(stage)
+                        /*switch(stage)
                         {
                             case SceneMenu.Stage.WHAT_IS_SHE_LOOKINH_AT:
                                 stage1();
@@ -220,8 +220,8 @@ public class PlayerController : MonoBehaviour
                             case SceneMenu.Stage.HOW_DEOS_SHE_FEEL_ABOUT:
                                 stage2();
                                 break;
-                        }
-                        /*switch (hint)
+                        }*/
+                        switch (hint)
                         {
                             case Hint.ARROW: // Tsai: Use enumeration to define states
                                 scene.hints[0].SetActive(true);
@@ -254,7 +254,7 @@ public class PlayerController : MonoBehaviour
                                 menuButton.SetActive(true);
                                 state = State.THIRDSTATE;
                                 break;
-                        }*/
+                        }
                     }
                 }
                 else if (result2 == 1)
@@ -354,10 +354,5 @@ public class PlayerController : MonoBehaviour
                 state = State.THIRDSTATE;
                 break;
         }
-    }
-
-    void stage2()
-    {
-
     }
 }
