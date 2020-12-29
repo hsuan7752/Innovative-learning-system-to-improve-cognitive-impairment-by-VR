@@ -27,6 +27,8 @@ public class SceneMenu : MonoBehaviour
 
     public enum Scenes
     {
+        BOOKSTORE,
+        CAFE,
         RESTAURANT,
     }
 
@@ -64,7 +66,11 @@ public class SceneMenu : MonoBehaviour
             if (menu == Menu.STAGE_ONE)
             {
                 stage = Stage.WHAT_IS_SHE_LOOKINH_AT;
-                SceneManager.LoadScene(1);
+                Array values = Enum.GetValues(typeof(Scenes));
+                int sceneLength = Enum.GetNames(typeof(Scenes)).Length;
+                int nextScene = UnityEngine.Random.Range(0, sceneLength);
+
+                SceneManager.LoadScene(nextScene);
                 change = false;
             }
             
@@ -84,9 +90,12 @@ public class SceneMenu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            menu = Menu.STAGE_ONE;
-            stage = Stage.WHAT_IS_SHE_LOOKINH_AT;
-            change = true;
+            Array values = Enum.GetValues(typeof(Scenes));
+            int sceneLength = Enum.GetNames(typeof(Scenes)).Length;
+            int nextScene = UnityEngine.Random.Range(1, sceneLength + 1);
+
+            SceneManager.LoadScene(nextScene);
+            change = false;
         }
 
         if (Input.GetKeyDown(KeyCode.E))
