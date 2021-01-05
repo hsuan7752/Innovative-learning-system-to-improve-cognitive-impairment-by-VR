@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     }
 
     int select = 0;
-    public int ans;
+    public int ans = 0;
     SceneMenu.Menu menu;
     SceneMenu.Stage stage;
     State state = State.FIRST_STATE;
@@ -70,6 +70,9 @@ public class PlayerController : MonoBehaviour
     public static Frequency frequency = Frequency.FIRST;
 
     public GameObject menuButton;
+    public GameObject nextButton;
+
+    Time triggerTime;
 
     // Start is called before the first frame update
     void Awake()
@@ -78,6 +81,7 @@ public class PlayerController : MonoBehaviour
             scene.Questions[0].SetActive(true);
 
         ans = UnityEngine.Random.Range(0, 6);
+        print(ans);
 
         //ans = 1;
 
@@ -87,7 +91,9 @@ public class PlayerController : MonoBehaviour
         foreach (GameObject it in scene.yes_no)
             it.SetActive(false);
         menuButton.SetActive(false);
-        scene.Questions[1].SetActive(false);
+        //nextButton.SetActive(false);
+        if (scene.Questions[1] != null)
+            scene.Questions[1].SetActive(false);
         scene.wellDone.SetActive(false);
         scene.YesOrNo.SetActive(false);
         scene.arrowL.SetActive(false);
@@ -116,7 +122,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        print("Start");
         anim = scene.NPC.GetComponent<Animator>();
         anim.Play(scene.emoji[UnityEngine.Random.Range(0, 5)]);
 
@@ -157,12 +162,14 @@ public class PlayerController : MonoBehaviour
             scene.yes_no[1].gameObject.transform.position = new Vector3(scene.items[select].gameObject.transform.position.x + float.Parse("0.5"), scene.items[select].gameObject.transform.position.y, scene.items[select].gameObject.transform.position.z);
         }
 
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ans = UnityEngine.Random.Range(0, 6);
+            ansObj = scene.items[ans];
+            target.transform.position = ansObj.transform.position;
+        }
 
-        /*ansObj = scene.items[ans];
-
-        target.transform.position = ansObj.transform.position;
-
-        Vector3 targetDir = ansObj.transform.position - eye.transform.position;
+        /*Vector3 targetDir = ansObj.transform.position - eye.transform.position;
         float angle = Vector3.Angle(targetDir, ansObj.transform.forward);
 
         if (ansObj.transform.position.x > scene.NPC.transform.position.x)
@@ -179,6 +186,12 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject == nextButton.gameObject)
+        {
+            SceneMenu.menu = SceneMenu.Menu.STAGE_ONE;
+            SceneMenu.change = true;
+        }
+
         scene.instruction.SetActive(false);
         switch (state)
         {
@@ -209,7 +222,7 @@ public class PlayerController : MonoBehaviour
                     {
                         state = State.THIRDSTATE;
                         scene.wellDone.SetActive(true);
-                        menuButton.SetActive(true);
+                        nextButton.SetActive(true);
                         prompt = true;
                         break;
                     }
@@ -254,7 +267,7 @@ public class PlayerController : MonoBehaviour
                                 h3 = true;
                                 break;
                             case Hint.End: // Tsai: Use enumeration to define states
-                                menuButton.SetActive(true);
+                                nextButton.SetActive(true);
                                 state = State.THIRDSTATE;
                                 break;
                         }
@@ -272,9 +285,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.THIRDSTATE: // Tsai: Use enumeration to define states
 
-                if (other.gameObject == menuButton.gameObject)
+                if (other.gameObject == nextButton.gameObject)
                 {
-                    SceneMenu.menu = SceneMenu.Menu.MAIN_MENU;
+                    SceneMenu.menu = SceneMenu.Menu.STAGE_ONE;
                     SceneMenu.change = true;
                 }
 
@@ -353,14 +366,19 @@ public class PlayerController : MonoBehaviour
                 h3 = true;
                 break;
             case Hint.End: // Tsai: Use enumeration to define states
-                menuButton.SetActive(true);
+                nextButton.SetActive(true);
                 state = State.THIRDSTATE;
                 break;
         }
     }
 
-    public void selectObject()
+    private void OnTriggerStay(Collider other)
     {
-        print("Click!");
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
     }
 }
