@@ -25,20 +25,6 @@ public class SceneMenu : MonoBehaviour
         RECORD,
     }
 
-    public enum Scenes
-    {
-        BOOKSTORE,
-        CAFE,
-        RESTAURANT,
-        DEPARTMENT,
-        DININGTABLE,
-        FAMILY,
-        GAMINGROOM,
-        PARK,
-        SUPERMARKET,
-        TOYSTORE
-    }
-
     public static Menu menu = Menu.MAIN_MENU;
 
     public static Stage stage;
