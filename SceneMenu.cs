@@ -93,9 +93,7 @@ public class SceneMenu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Array values = Enum.GetValues(typeof(Scenes));
-            int sceneLength = Enum.GetNames(typeof(Scenes)).Length;
-            int nextScene = UnityEngine.Random.Range(1, sceneLength + 1);
+            int nextScene = UnityEngine.Random.Range(1, sceneCount + 1);
 
             SceneManager.LoadScene(nextScene);
             change = false;
