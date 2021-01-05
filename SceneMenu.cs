@@ -30,6 +30,13 @@ public class SceneMenu : MonoBehaviour
         BOOKSTORE,
         CAFE,
         RESTAURANT,
+        DEPARTMENT,
+        DININGTABLE,
+        FAMILY,
+        GAMINGROOM,
+        PARK,
+        SUPERMARKET,
+        TOYSTORE
     }
 
     public static Menu menu = Menu.MAIN_MENU;
@@ -37,6 +44,9 @@ public class SceneMenu : MonoBehaviour
     public static Stage stage;
 
     static SceneMenu instance;
+
+    int sceneCount;
+    string[] scenes;
 
     private void Awake()
     {
@@ -50,6 +60,15 @@ public class SceneMenu : MonoBehaviour
             Destroy(gameObject);
         }
 
+        sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
+        scenes = new string[sceneCount];
+        for (int i = 0; i < sceneCount; i++)
+        {
+            scenes[i] = System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
+        }
+
+        /*for (int i = 0; i < sceneCount; ++i)
+            print(scenes[i].ToString());*/
     }
 
     // Start is called before the first frame update
@@ -66,9 +85,7 @@ public class SceneMenu : MonoBehaviour
             if (menu == Menu.STAGE_ONE)
             {
                 stage = Stage.WHAT_IS_SHE_LOOKINH_AT;
-                Array values = Enum.GetValues(typeof(Scenes));
-                int sceneLength = Enum.GetNames(typeof(Scenes)).Length;
-                int nextScene = UnityEngine.Random.Range(0, sceneLength);
+                int nextScene = UnityEngine.Random.Range(1, sceneCount + 1);
 
                 SceneManager.LoadScene(nextScene);
                 change = false;
